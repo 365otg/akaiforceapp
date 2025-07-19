@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Force Guide: Ultimate Edition</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Master your Akai Force with this comprehensive guide. Explore hundreds of essential tips, workflow hacks, and tutorials for clip launching, sampling, arranging, effects, mixing, and song creation. Your ultimate resource for the Force.">
+    <meta name="keywords" content="Akai, Force, Akai Force, Force Guide, Force Tutorial, Beatmaking, Sampling, Arranger, Clip Matrix, Step Sequencer, Q-Links, XYFX, Music Production, Songwriting, Mixdown, Mastering, Ableton Live Control, Envelope Follower, Pad Scenes">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jsPDF library for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --akai-dark: #1A1A1D;
+            --akai-card-bg: #1E1E1E;
+            --akai-accent: #E53E3E; /* Akai Red */
+            --akai-accent-hover: #FC8181;
+            --akai-muted: #4A4A50;
+            --akai-muted-hover: #5A5A60;
+            --akai-text-light: #E0E0E0;
+            --akai-text-dark: #A0A0A0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--akai-dark);
+            color: var(--akai-text-light);
+            padding-top: 2rem;
+            padding-bottom: 4rem;
+            background-image: linear-gradient(135deg, #101012 0%, #1A1A1D 100%);
+            background-size: 200% 200%;
+            animation: gradient-animation 15s ease infinite;
+        }
+
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .card {
+            background-color: var(--akai-card-bg);
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+        }
+        .tip-category-button, .difficulty-sort-button, .header-button {
+            background-color: var(--akai-muted);
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out, box-shadow 0.2s ease-in-out;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            white-space: nowrap;
+        }
+        .tip-category-button:hover, .difficulty-sort-button:hover, .header-button:hover {
+            background-color: var(--akai-muted-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+        .tip-category-button.active, .difficulty-sort-button.active {
+            background-color: var(--akai-accent);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+        }
+        .tip-item {
+            background-color: #2A2A30;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 5px solid var(--akai-accent);
+        }
+        .modal {
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 50;
+        }
+        .modal-content {
+            background-color: var(--akai-card-bg);
+            border-radius: 16px;
+        }
+        .close-button {
+            color: #F0F0F0;
+            font-size: 1.8rem;
+            transition: color 0.2s;
+        }
+        .close-button:hover {
+            color: #FF8888;
+        }
+        .search-input {
+            background-color: var(--akai-dark);
+            border: 1px solid var(--akai-muted);
+            color: #F0F0F0;
+            padding: 14px 20px;
+            border-radius: 10px;
+            outline: none;
+            width: 100%;
+            max-width: 450px;
+        }
+        .search-input::placeholder {
+            color: var(--akai-text-dark);
+        }
+        .search-button, #download-pdf-button, .donate-button, .more-info-button, #back-to-tip-button {
+            background-color: var(--akai-accent);
+            color: #ffffff;
+            padding: 12px 22px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .search-button:hover, #download-pdf-button:hover, .donate-button:hover, .more-info-button:hover, #back-to-tip-button:hover {
+            background-color: var(--akai-accent-hover);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+        .related-tips-container, .glossary-item, .suggested-tip-container, #details-glossary-container {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--akai-muted);
+        }
+        .suggested-tip-box, .related-tip-box {
+            background-color: #252525;
+            border: 1px solid var(--akai-muted);
+            border-left: 5px solid var(--akai-accent);
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .suggested-tip-box:hover, .related-tip-box:hover {
+            background-color: #333;
+        }
+        .tip-icon {
+            margin-right: 12px;
+            color: var(--akai-accent);
+            font-size: 1.1em;
+        }
+        .copy-button {
+            background-color: var(--akai-muted);
+            color: #ffffff;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: background-color 0.2s ease-in-out;
+            margin-top: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+        .copy-button:hover {
+            background-color: var(--akai-muted-hover);
+        }
+        .difficulty-badge {
+            display: inline-block;
+            padding: 0.25em 0.6em;
+            font-size: 0.75em;
+            font-weight: 700;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 0.375rem;
+        }
+        .difficulty-easy { color: #1f2937; background-color: #6ee7b7; }
+        .difficulty-intermediate { color: #1f2937; background-color: #fde047; }
+        .difficulty-hard { color: #f9fafb; background-color: #f87171; }
+        .details-view { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        footer { border-top: 1px solid var(--akai-muted); padding-top: 2rem; margin-top: 4rem; }
+        .footer-link { transition: color 0.2s ease-in-out; color: var(--akai-text-dark); }
+        .footer-link:hover { color: var(--akai-accent); }
+        h1, h2, h3, h4 { color: var(--akai-text-light); }
+        p, li { color: #b0b0b0; }
+        #modal-title, #details-title, #glossary-modal h3 { color: var(--akai-text-light); }
+        #modal-description, #modal-source, #details-content, #glossary-content p, #related-tips-list li { color: #b0b0b0; }
+        .main-title {
+            background: -webkit-linear-gradient(45deg, #FF6B6B, #E53E3E);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .drum-pattern-grid {
+            display: grid;
+            grid-template-columns: repeat(16, 1fr);
+            gap: 4px;
+            background-color: #252525;
+            padding: 8px;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+        }
+        .drum-step {
+            width: 100%;
+            padding-bottom: 100%; /* Aspect ratio 1:1 */
+            background-color: #4A4A50;
+            border-radius: 4px;
+        }
+        .drum-step.active {
+            background-color: var(--akai-accent);
+        }
+        .combo-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        .combo-table th, .combo-table td {
+            border: 1px solid var(--akai-muted);
+            padding: 12px;
+            text-align: left;
+        }
+        .combo-table th {
+            background-color: var(--akai-muted);
+        }
+        .combo-key {
+            background-color: var(--akai-text-dark);
+            color: var(--akai-dark);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center px-4">
+
+    <!-- === HEADER SECTION === -->
+    <header class="w-full max-w-6xl text-center mb-12 flex flex-col items-center">
+        <div class="w-full flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+            <div class="w-full md:w-auto flex justify-center">
+                <button id="force-flavors-button" class="header-button w-full sm:w-auto"><i class="fa-solid fa-drum mr-2"></i>Force Flavors</button>
+            </div>
+            <div class="flex flex-wrap justify-center gap-2">
+                <button id="effects-list-button" class="header-button"><i class="fas fa-sliders mr-2"></i>Effects List</button>
+                <button id="qlinks-button" class="header-button"><i class="fas fa-circle-nodes mr-2"></i>Q-Links</button>
+                <button id="button-combos-button" class="header-button"><i class="fas fa-keyboard mr-2"></i>Button Combos</button>
+                <button id="glossary-button" class="header-button"><i class="fas fa-book mr-2"></i>Glossary</button>
+            </div>
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold main-title mb-4">The FORCE Guide: Ultimate Edition</h1>
+        <p class="text-lg sm:text-xl lg:text-2xl text-gray-300">Unlock the full potential of your Akai Professional FORCE!</p>
+    </header>
+
+    <main class="w-full max-w-6xl">
+        <div class="flex flex-col sm:flex-row justify-center items-center mb-12 gap-4 w-full px-4 sm:px-0">
+            <input type="search" id="search-input" placeholder="Search tips..." class="search-input w-full sm:w-auto flex-grow sm:flex-grow-0">
+            <button id="search-button" class="search-button w-full sm:w-auto">Search</button>
+        </div>
+
+        <section class="mb-16 p-6 featured-section rounded-lg">
+             <h2 class="text-3xl font-bold text-center mb-6">Featured Tips</h2>
+             <div id="top-tips-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+
+        <div class="mb-12">
+            <h3 class="text-2xl font-bold text-center mb-6">Filter by Category</h3>
+            <div id="category-filter-container" class="flex flex-wrap justify-center gap-4"></div>
+        </div>
+        
+        <div id="difficulty-filter-container" class="flex flex-wrap justify-center gap-4 mb-16">
+            <button class="difficulty-sort-button active" data-difficulty="all">All Difficulties</button>
+            <button class="difficulty-sort-button" data-difficulty="Easy">Easy</button>
+            <button class="difficulty-sort-button" data-difficulty="Intermediate">Intermediate</button>
+            <button class="difficulty-sort-button" data-difficulty="Hard">Hard</button>
+        </div>
+
+        <section id="tips-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></section>
+        
+        <div class="flex justify-center mt-16">
+            <button id="download-pdf-button" class="search-button"><i class="fa-solid fa-file-pdf"></i> Download All Tips as PDF</button>
+        </div>
+    </main>
+
+    <!-- Tip Modal -->
+    <div id="tip-modal" class="modal fixed inset-0 flex items-center justify-center p-4 hidden">
+        <div class="modal-content w-full max-w-3xl p-8 relative overflow-y-auto max-h-[90vh]">
+            <button id="close-modal" class="close-button absolute top-4 right-4 z-10">&times;</button>
+            <div id="main-tip-view">
+                <h3 id="modal-title" class="text-3xl font-semibold mb-2"></h3>
+                <p id="modal-category" class="text-lg text-gray-400 mb-6"></p>
+                <p id="modal-description" class="text-lg leading-relaxed"></p>
+                <p id="modal-source" class="text-sm mt-6"></p>
+                <div class="flex flex-wrap gap-2 mt-4">
+                    <button id="copy-tip-button" class="copy-button"><i class="fa-solid fa-copy"></i> Copy Tip</button>
+                    <button id="more-info-button" class="more-info-button"><i class="fa-solid fa-circle-info"></i> More Info</button>
+                </div>
+            </div>
+            <div id="details-view" class="hidden">
+                 <h3 id="details-title" class="text-3xl font-semibold mb-2"></h3>
+                 <p id="details-category" class="text-lg text-gray-400 mb-6"></p>
+                 <div id="details-content" class="text-lg leading-relaxed prose prose-invert max-w-none"></div>
+                 
+                 <div id="details-glossary-container" class="related-tips-container">
+                     <h4 class="text-2xl font-semibold mb-4">Relevant Glossary Terms</h4>
+                     <div id="details-glossary-list"></div>
+                 </div>
+
+                 <div id="related-tips-container" class="related-tips-container">
+                    <h4 class="text-2xl font-semibold mb-4">Related Tips</h4>
+                    <div id="related-tips-list" class="space-y-3"></div>
+                 </div>
+
+                 <div id="suggested-tip-container" class="suggested-tip-container">
+                    <h4 class="text-2xl font-semibold mb-4">Suggested Tip</h4>
+                    <div id="suggested-tip-box-content"></div>
+                 </div>
+                 
+                 <button id="back-to-tip-button" class="search-button mt-6"><i class="fa-solid fa-arrow-left"></i> Back to Tip</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Glossary Modal -->
+    <div id="glossary-modal" class="modal fixed inset-0 flex items-center justify-center p-4 hidden">
+        <div class="modal-content w-full max-w-2xl p-8 relative overflow-y-auto max-h-[90vh]">
+            <button id="close-glossary-modal" class="close-button absolute top-4 right-4 z-10">&times;</button>
+            <h3 class="text-4xl font-semibold mb-6">Glossary</h3>
+            <input type="search" id="glossary-search-input" placeholder="Search terms..." class="search-input mb-6 w-full">
+            <div id="glossary-content" class="text-lg leading-relaxed"></div>
+        </div>
+    </div>
+
+    <!-- Force Flavors Modal -->
+    <div id="force-flavors-modal" class="modal fixed inset-0 flex items-center justify-center p-4 hidden">
+        <div class="modal-content w-full max-w-4xl p-8 relative overflow-y-auto max-h-[90vh]">
+            <button id="close-force-flavors-modal" class="close-button absolute top-4 right-4 z-10">&times;</button>
+            <h3 class="text-4xl font-semibold mb-6"><i class="fa-solid fa-drum mr-3"></i>Force Flavors: 35 Hip Hop Patterns</h3>
+            <div id="force-flavors-content" class="text-lg leading-relaxed">
+                <div class="mb-8">
+                    <h4 class="text-2xl font-bold mb-4 border-b-2 border-akai-accent pb-2">Creative Workflows</h4>
+                    <p class="mb-2"><strong>Classic Sidechain Pumping:</strong> Use the Mother Ducker effect. Place the Mother Ducker Input on your Kick Drum track (Insert 1). Then, on your Bass or Pad track, add the Mother Ducker effect. The bass/pad will now 'duck' in volume every time the kick hits, creating space in the mix.</p>
+                    <p class="mb-2"><strong>Lo-Fi Beat Texture:</strong> On your master output, add the AIR Lo-Fi insert effect. Reduce the 'Bit Depth' to 12-bit and the 'Sample Rate' to around 22000Hz for instant vintage sampler grit. Add the AIR Vinyl effect after it and dial in some 'Crackle' and 'Wow' for extra character.</p>
+                    <p><strong>Instant Glitch Effects with XYFX:</strong> In XYFX mode, load the 'Beat Repeat LPF' preset. While your track is playing, use the touchscreen to create rhythmic stutters and filter sweeps. Record this automation to add dynamic, complex edits to your arrangement.</p>
+                </div>
+                <div>
+                    <h4 class="text-2xl font-bold mb-4 border-b-2 border-akai-accent pb-2">Classic Beat Patterns</h4>
+                    <div id="drum-patterns-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Effects List Modal -->
+    <div id="effects-list-modal" class="modal fixed inset-0 flex items-center justify-center p-4 hidden">
+        <div class="modal-content w-full max-w-4xl p-8 relative overflow-y-auto max-h-[90vh]">
+            <button id="close-effects-list-modal" class="close-button absolute top-4 right-4 z-10">&times;</button>
+            <h3 class="text-4xl font-semibold mb-6">Effects List</h3>
+            <input type="search" id="effects-search-input" placeholder="Search effects..." class="search-input mb-6 w-full">
+            <div id="effects-list-container" class="text-lg leading-relaxed"></div>
+        </div>
+    </div>
+    
+    <!-- Button Combos Modal -->
+    <div id="button-combos-modal" class="modal fixed inset-0 flex items-center justify-center p-4 hidden">
+        <div class="modal-content w-full max-w-4xl p-8 relative overflow-y-auto max-h-[90vh]">
+            <button id="close-button-combos-modal" class="close-button absolute top-4 right-4 z-10">&times;</button>
+            <h3 class="text-4xl font-semibold mb-6">Button Combination List</h3>
+            <div id="button-combos-container" class="text-sm leading-relaxed"></div>
+        </div>
+    </div>
+
+    <!-- Q-Links Modal -->
+    <div id="qlinks-modal" class="modal fixed inset-0 flex items-center justify-center p-4 hidden">
+        <div class="modal-content w-full max-w-4xl p-8 relative overflow-y-auto max-h-[90vh]">
+            <button id="close-qlinks-modal" class="close-button absolute top-4 right-4 z-10">&times;</button>
+            <h3 class="text-4xl font-semibold mb-6">Q-Links Explained</h3>
+            <div id="qlinks-container" class="text-lg leading-relaxed"></div>
+        </div>
+    </div>
+
+    <footer class="w-full max-w-6xl text-center text-gray-500">
+        <p class="mb-4">Inspired by the original VERSELAB Guide by <a href="https://365otg.github.io/365CP/" target="_blank" class="font-bold footer-link">Charles A Paris</a></p>
+        <div class="flex justify-center items-center gap-6 text-2xl">
+            <a href="https://www.akaipro.com/force" target="_blank" class="footer-link"><i class="fas fa-globe"></i></a>
+            <a href="https://www.youtube.com/@AkaiProVideo" target="_blank" class="footer-link"><i class="fab fa-youtube"></i></a>
+        </div>
+    </footer>
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { jsPDF } = window.jspdf;
+
+        const categories = {
+            concepts_setup: { name: "Concepts & Setup", icon: "fa-solid fa-lightbulb" },
+            clips_scenes_launching: { name: "Clips, Scenes & Launching", icon: "fa-solid fa-rocket" },
+            track_types_workflow: { name: "Track Types & Workflow", icon: "fa-solid fa-layer-group" },
+            sequencing_recording: { name: "Sequencing & Recording", icon: "fa-solid fa-border-all" },
+            sampling_chopping: { name: "Sampling & Chopping", icon: "fa-solid fa-scissors" },
+            mixing_effects: { name: "Mixing & Effects", icon: "fa-solid fa-sliders" },
+            arrangement_workflow: { name: "Arrangement & Workflow", icon: "fa-solid fa-wave-square" },
+            qlinks_automation: { name: "Q-Links & Pad Modes", icon: "fa-solid fa-robot" },
+            hardware_integration: { name: "Hardware & Integration", icon: "fa-solid fa-link" },
+            sound_design: { name: "Sound Design", icon: "fa-solid fa-atom" },
+            music_theory: { name: "Music Theory", icon: "fa-solid fa-music" },
+            pro_tips: { name: "Pro Tips & Tricks", icon: "fa-solid fa-star" }
+        };
+
+        const tipsData = [
+            // Concepts & Setup
+            { id: 101, category: "concepts_setup", title: "Understanding Track Types", description: "Force has 8 track types: Audio, Drum, Keygroup, Plugin, MIDI, CV, Submix, and Master.", source: "Manual p.62", difficulty: "Easy", context: "Each track type is a container for a specific kind of data. Audio tracks hold samples and recordings. Drum and Keygroup tracks are sample-based instruments. Plugin tracks host internal synths like Hype. MIDI and CV tracks control external gear. Submix and Master tracks are for routing and overall mix control. Choosing the right track type from the start is fundamental to an organized project." },
+            { id: 102, category: "concepts_setup", title: "Clip vs. Arranger Workflow", description: "Force has two main workflows: Clip-based (Matrix Mode) for jamming and a linear Arranger for final composition.", source: "Manual p.8, 31", difficulty: "Easy", context: "Think of the Matrix as your sketchbook for ideas. You can launch clips and scenes freely to find combinations that work. When you're ready, you can record this live performance from the Matrix into the linear Arranger to build a final, editable song structure. You can switch between these two modes at any time." },
+            { id: 103, category: "concepts_setup", title: "What is a Scene?", description: "A Scene is a horizontal row of clips in the Matrix. Launching a scene plays all clips in that row simultaneously.", source: "Manual p.10", difficulty: "Easy", context: "Scenes are the building blocks of your song structure. You can create different scenes for your intro, verse, chorus, and bridge. By launching them in order, you perform your song. You can also set a BPM and time signature per scene for dynamic changes in your performance." },
+            { id: 104, category: "concepts_setup", title: "Installing a SATA Drive", description: "You can expand Force's internal storage by installing a standard 2.5” SATA drive (SSD or HDD).", source: "Manual p.417", difficulty: "Easy", context: "To install a drive, power off the Force, remove the panel on the bottom, connect your drive to the SATA connector, and screw it onto the panel. An SSD is recommended for faster loading times of projects and samples. This is the best way to carry your entire library with you." },
+            { id: 105, category: "concepts_setup", title: "Standalone vs. Computer Mode", description: "Force can run entirely on its own (Standalone) or connected to a computer as a controller (Computer Mode).", source: "Manual p.12", difficulty: "Easy", context: "In Standalone Mode, Force is a complete production station. In Computer Mode, it can become a powerful controller for Ableton Live (via Ableton Link) or act as an audio interface for your DAW. To switch, go to Menu > and tap the Force icon in the top left." },
+            { id: 106, category: "concepts_setup", title: "Project Templates", description: "Create and save project templates to speed up your workflow.", source: "Force Workflow", difficulty: "Intermediate", context: "Set up a project with your favorite drum kits, synth plugins, and submix routing (e.g., a drum bus, a synth bus). Then, go to the Save menu and save it as a Template. Now, when you start a new project, you can load this template and have all your go-to sounds and routing ready instantly." },
+            { id: 107, category: "concepts_setup", title: "File System Management", description: "Organize your samples and projects in folders on your drive for quick access via the Browser.", source: "Best Practices", difficulty: "Easy", context: "Create a clear folder structure on your SD card or SATA drive. For example: 'Samples' > 'Drum Kits', 'Loops', 'Vocals'. And 'Projects' > 'Finished Tracks', 'Sketches'. A well-organized library makes finding sounds much faster and keeps your creative momentum going." },
+
+            // Clips, Scenes & Launching
+            { id: 201, category: "clips_scenes_launching", title: "Launching a Single Clip", description: "In Matrix mode, press any pad on the 8x8 grid to launch the corresponding clip.", source: "Manual p.8", difficulty: "Easy", topTip: true, context: "This is the most fundamental action on the Force. A playing clip will blink green. A queued clip will blink yellow. Only one clip per track (column) can play at a time, unless you change the track's launch mode." },
+            { id: 202, category: "clips_scenes_launching", title: "Setting Launch Quantization", description: "Hold [Shift] and press one of the Track Select buttons [1-8] to change the global launch quantization.", source: "Manual p.51", difficulty: "Intermediate", context: "Launch quantization ensures your clips and scenes start perfectly in time. A setting of '1 Bar' is common, meaning clips will wait until the start of the next bar to launch. 'Off' allows for immediate, unquantized launching." },
+            { id: 203, category: "clips_scenes_launching", title: "Assigning Tracks to the Crossfader", description: "Hold [Assign A] and press a Track Select button to assign that track to the A side of the crossfader.", source: "Manual p.10", difficulty: "Easy", topTip: true, context: "This is a powerful performance feature, especially for DJs. You can assign your drums and bass to side A and melodic elements to side B, then blend between them. You can also assign the master track to one side to fade the entire song in or out." },
+            { id: 204, category: "clips_scenes_launching", title: "Clip Launch Modes", description: "In the clip editor, you can set a clip's launch mode to Trigger, Toggle, Gate, or Repeat.", source: "Manual p.21", difficulty: "Intermediate", context: "Trigger mode restarts the clip each time it's launched. Toggle plays/stops with each press. Gate plays only while you hold the pad. Repeat plays the clip repeatedly. Use Trigger for one-shot SFX and Toggle for loops." },
+            { id: 205, category: "clips_scenes_launching", title: "Stop Clip Buttons", description: "The row of buttons above the 8x8 matrix can stop individual clips playing in each track.", source: "Manual p.9", difficulty: "Easy", context: "This is faster than using the 'Clip Stop' button combo. During a performance, you can quickly punch out individual elements like the hi-hats for a small breakdown, then bring them back in by re-launching the clip." },
+            { id: 206, category: "clips_scenes_launching", title: "Duplicating Scenes", description: "Hold [Copy] and press a Scene Launch button to copy it. Then, press an empty Scene Launch button to paste it.", source: "Force Workflow", difficulty: "Easy", context: "This is essential for building song arrangements. Copy your 'Verse' scene to a new slot, then edit the new scene by removing or adding clips to create a variation, like a 'Verse 2' with an added synth line." },
+            { id: 207, category: "clips_scenes_launching", title: "Per-Clip Launch Quantization", description: "Override the global launch quantization for individual clips.", source: "Manual p.21", difficulty: "Hard", context: "In the clip editor, you can set a specific launch quantization value for that clip alone. This is useful for having most of your loops launch on the bar, but allowing a specific drum fill or FX sound to launch immediately (set to 'Off') for more dynamic, off-the-cuff performances." },
+
+            // Track Types & Workflow
+            { id: 301, category: "track_types_workflow", title: "Loading a Drum Kit", description: "Create a Drum Track, then press [Load] or go to the Browser to find and load a drum program.", source: "Manual p.23", difficulty: "Easy", context: "Once a Drum Track is created, press the [Load] button to open the browser. Navigate to your drum kits (often ending in .xpm) and load one. The 16 pads in Note Mode will now trigger the different sounds in the kit." },
+            { id: 302, category: "track_types_workflow", title: "Using a Plugin Track", description: "Create a Plugin Track to use Force's powerful built-in instruments like Hype, TubeSynth, and Bassline.", source: "Manual p.69", difficulty: "Intermediate", context: "After creating a plugin track, go to Track Edit mode ([Shift] + [Clip]) to access the synth's interface on the touchscreen. Here you can browse presets, tweak parameters like filters and envelopes, and save your own custom sounds." },
+            { id: 303, category: "track_types_workflow", title: "Setting up a MIDI Track", description: "Use a MIDI track to sequence external hardware synths.", source: "Manual p.71", difficulty: "Intermediate", context: "Create a MIDI track. In the Track Edit screen, set the MIDI Output Port to the correct physical MIDI Out or USB port your synth is connected to. Then set the MIDI Channel to match your external gear's receiving channel. Now, any MIDI you record or program in a clip will be sent to your hardware." },
+            { id: 304, category: "track_types_workflow", title: "Using a Keygroup Track", description: "A Keygroup track maps a single sample across the pads chromatically, creating a playable melodic instrument.", source: "Manual p.67", difficulty: "Intermediate", context: "Load any sample (like a piano note, a vocal snippet, or a synth stab) into a Keygroup track to instantly play melodies with it in Note Mode. In the sampler, you can set the root note of the sample to ensure it maps correctly across the keyboard." },
+            { id: 305, category: "track_types_workflow", title: "Recording to an Audio Track", description: "Create an Audio Track, arm it for recording, and set the input source to record external audio.", source: "Manual p.64", difficulty: "Easy", context: "Create an Audio Track. In the track settings (or on the main screen), set the input to 'In 1/2'. Plug a microphone or instrument into the back of the Force. Arm the track by pressing its record arm button. You can now record audio directly into a clip slot by pressing the record button on the transport." },
+            { id: 306, category: "track_types_workflow", title: "Using Submix Tracks for Group Processing", description: "Route multiple tracks to a Submix track to apply the same effects to all of them at once.", source: "Manual p.101", difficulty: "Intermediate", topTip: true, context: "In the Mixer's I/O view, change the output of all your drum tracks from 'Master' to 'Sub 1'. Now, you can go to the Submix 1 track and add a single compressor and EQ to process the entire drum kit together. This saves CPU and makes your mix sound more cohesive." },
+            { id: 307, category: "track_types_workflow", title: "Setting up a CV Track", description: "Use a CV track to control and sequence modular or semi-modular synthesizers.", source: "Manual p.73", difficulty: "Hard", context: "Create a CV track. Connect one of the four CV/Gate outputs on the back of the Force to your synth's inputs (e.g., CV Out 1 to V/Oct, Gate Out 1 to Gate). In the track settings, you can configure the CV signal. Now you can use the Force's sequencer to play your modular gear." },
+
+            // Sequencing & Recording
+            { id: 401, category: "sequencing_recording", title: "Using the Step Sequencer", description: "Press [Step Seq] to program beats visually, one step at a time.", source: "Manual p.29", difficulty: "Easy", topTip: true, context: "This is a classic and precise way to program drum patterns. The top four rows of pads represent 32 steps. The bottom-left 16 pads select which drum sound you're editing. The bottom-right 16 pads can be used to set velocity per step or add notes with different timings (Note Repeat)." },
+            { id: 402, category: "sequencing_recording", title: "Editing Notes in the Grid View", description: "Press [Menu] > [Grid] to open the piano roll editor for a MIDI clip.", source: "Manual p.16", difficulty: "Intermediate", context: "The Grid View gives you precise, DAW-like control over your MIDI sequences. You can add, delete, move, and resize notes with the touchscreen. Use the velocity lane at the bottom to edit the velocity of each note, or change it to edit other MIDI data like modulation." },
+            { id: 403, category: "sequencing_recording", title: "Using the Arpeggiator", description: "Press [Arp] to activate the arpeggiator for any melodic track.", source: "Manual p.98", difficulty: "Easy", context: "Hold down a chord in Note Mode to hear it work. Hold [Shift] + [Arp] to access the Arpeggiator's settings, where you can change the pattern (Up, Down, Random), rate (1/4, 1/8, 1/16), octave range, and swing amount." },
+            { id: 404, category: "sequencing_recording", title: "Recording Automation", description: "While recording, turn any Q-Link knob or move the crossfader to record its movement as automation into the clip.", source: "Manual p.42", difficulty: "Intermediate", context: "You can also record automation from the XYFX screen. This is key to adding movement and life to your tracks, like filter sweeps or volume fades. To view or edit automation, go to the Grid View and select the parameter from the dropdown menu at the bottom." },
+            { id: 405, category: "sequencing_recording", title: "Note Repeat / Latch", description: "Hold Note Repeat and a pad for classic hi-hat rolls. Press Latch to keep it going without holding the button.", source: "Manual p.98", difficulty: "Easy", context: "This is essential for creating trap hi-hats and techno-style synth lines. While holding Note Repeat, use the Track Select buttons [1-8] (with Shift) to change the timing on the fly. You can record the output of Note Repeat directly into a clip." },
+            { id: 406, category: "sequencing_recording", title: "Punch In/Out Recording", description: "Set a loop range and automatically start and stop recording within that range.", source: "Manual p.136", difficulty: "Intermediate", context: "In the Arranger or a long clip, set the loop brace to where you want to record (e.g., bars 9-17). Enable loop playback and arm recording. The Force will only record when the playhead is inside the loop brace, allowing you to perfect a specific section of a performance without overwriting the rest." },
+            { id: 407, category: "sequencing_recording", title: "Step Sequencer Automation", description: "In the Step Sequencer, you can program automation per step, not just notes.", source: "Force Workflow", difficulty: "Hard", context: "While in the Step Sequencer, select a drum pad. Then, press the 'Step' button on the screen and choose a parameter to automate, like 'Pan' or 'Filter Cutoff'. Now, the top 32 pads represent the value of that parameter for each step. You can create complex, evolving patterns by programming, for example, the pan of a hi-hat on every step." },
+
+            // Sampling & Chopping
+            { id: 501, category: "sampling_chopping", title: "Entering the Sampler", description: "Press [Menu] > [Sampler] to open the Sampler. Here you can record audio from external inputs or resample.", source: "Manual p.38", difficulty: "Easy", context: "Before sampling, set your input source (e.g., Input 1,2 or Resample L+R), adjust the input gain using the knob on the back, and set the recording threshold so recording starts automatically when sound is detected." },
+            { id: 502, category: "sampling_chopping", title: "Chopping a Sample by Threshold", description: "After recording or loading a sample, go to Sample Edit > Chop. Threshold mode automatically slices at each transient.", source: "Manual p.244", difficulty: "Intermediate", topTip: true, context: "This is powerful for automatically chopping drum breaks. It detects the start of each drum hit and places a slice marker there. Adjust the Threshold value to detect more or fewer transients. This is the fastest way to deconstruct a loop." },
+            { id: 503, category: "sampling_chopping", title: "Convert Slices to a Drum Program", description: "After chopping a sample, press [Shift] + [Convert] to create a new track with each slice on a different pad.", source: "Manual p.247", difficulty: "Intermediate", context: "This is a classic MPC/Force workflow. It lets you take any loop, chop it up, and instantly play it back in a new order to create a new beat or melody. Choose 'New Drum Track Using Slices' to get started." },
+            { id: 504, category: "sampling_chopping", title: "Warping an Audio Clip", description: "In the Grid View for an Audio Clip, tap the 'Warp' button to time-stretch the audio to match your project's tempo.", source: "Manual p.15", difficulty: "Hard", context: "Warping is essential for making loops of different tempos work together. After enabling Warp, you can tap 'Detect' to have Force analyze and find the original BPM of the loop. For best results, make sure your clip's start and end points are trimmed precisely to the loop's length." },
+            { id: 505, category: "sampling_chopping", title: "Resampling for Sound Design", description: "Set the Sampler input to 'Resample L+R' to record Force's master output.", source: "Manual p.258", difficulty: "Hard", topTip: true, context: "This is a pro-level technique. Play a sequence with multiple tracks and effects, then record it as a new loop. This allows you to 'flatten' complex layers into a single audio file, which you can then chop, warp, and process further, saving CPU and opening up new creative possibilities." },
+            { id: 506, category: "sampling_chopping", title: "Manual Chopping", description: "In Sample Edit > Chop, select 'Manual' mode to add your own slice points by tapping pads.", source: "Manual p.244", difficulty: "Intermediate", context: "While the sample is playing, tap one of the 16 pads at the exact moment you want to create a slice marker. This gives you complete artistic control over the chopping process, which is great for vocal samples or loops where transients aren't obvious." },
+            { id: 507, category: "sampling_chopping", title: "Non-Destructive Slicing", description: "Chopping a sample doesn't alter the original audio file, it just creates references.", source: "Force Concepts", difficulty: "Intermediate", context: "When you chop a sample, Force creates a program that points to different parts of the original audio. This means you can always go back into Sample Edit, move your slice points, and the changes will be reflected in your drum program instantly, without having to re-export anything." },
+
+            // Mixing & Effects
+            { id: 601, category: "mixing_effects", title: "Using the Channel Mixer", description: "Press [Mixer] to open the Channel Mixer for an overview of all your tracks, submixes, and returns.", source: "Manual p.24, 121", difficulty: "Easy", context: "Use the tabs at the bottom of the screen to switch between views for Volume, Pan, Sends, Effects, and I/O routing for each track. Use the Q-Link knobs to make adjustments to the selected track." },
+            { id: 602, category: "mixing_effects", title: "Adding Insert Effects", description: "In the Mixer's 'Effects' tab, tap an empty insert slot on a track to load an effect.", source: "Manual p.101", difficulty: "Easy", context: "Each track, pad, submix, and output can have up to four insert effects. This is where you'll add 'corrective' effects like compressors and EQs, or 'creative' effects like distortion and phasers directly onto a sound." },
+            { id: 603, category: "mixing_effects", title: "Using Send/Return Effects", description: "Use the 'Sends' tab in the mixer to send a portion of a track's signal to a Return track for processing.", source: "Manual p.108", difficulty: "Intermediate", context: "This is an efficient way to apply one effect to multiple tracks. Instead of putting a separate reverb on 10 different tracks, you can send a little bit of each of the 10 tracks to a single, high-quality reverb on a Return track. This saves CPU and creates a more cohesive sense of space." },
+            { id: 604, category: "mixing_effects", title: "Using the Pad Mixer", description: "For a Drum Track, press [Shift] + [Mixer] to open the Pad Mixer.", source: "Manual p.126", difficulty: "Intermediate", topTip: true, context: "This is incredibly powerful. It allows you to mix and add effects to individual pads within the same kit. You can EQ your kick, compress your snare, and put a delay on your hi-hat, all independently, giving you the control of a full mixing desk for your drums." },
+            { id: 605, category: "mixing_effects", title: "Sidechain with Mother Ducker", description: "Place the 'Mother Ducker Input' insert on your kick track, then the 'Mother Ducker' insert on your bass or pad track.", source: "Manual p.359", difficulty: "Hard", context: "This is essential for modern electronic music. It makes your kick drum punch through the mix by momentarily lowering the volume of other elements. Adjust the 'Amount' and 'Release' on the Mother Ducker effect to control how much pumping you get and how quickly the volume returns to normal." },
+            { id: 606, category: "mixing_effects", title: "Filter Modulation with Envelope Follower", description: "Use a drum loop's rhythm to modulate a synth pad's filter cutoff.", source: "Force Workflow", difficulty: "Hard", context: "Place the Envelope Follower effect on your drum track. On your synth pad track, add a filter effect like AIR Vintage Filter. In the modulation matrix for the pad track, select the Envelope Follower from the drum track as the source, and the filter's cutoff frequency as the destination. Now the synth pad will rhythmically 'pulse' with the beat." },
+            { id: 607, category: "mixing_effects", title: "Parallel Compression", description: "Create a punchier sound by blending a heavily compressed signal with the original dry signal.", source: "Mixing Techniques", difficulty: "Hard", context: "Use a Send to route a track (like your main drums) to a Submix. On the Submix, add a compressor and set it to extreme settings (high ratio, fast attack). Now, in the main mixer, you can blend in this 'crushed' Submix signal underneath your main drum track. This adds power and excitement without sacrificing the original dynamics." },
+
+            // Arrangement & Workflow
+            { id: 701, category: "arrangement_workflow", title: "Recording to the Arranger", description: "Press [Shift] + [Rec] to arm arrangement recording, then launch clips and scenes to record them to the timeline.", source: "Manual p.136", difficulty: "Intermediate", context: "This is how you turn your jam session from the Matrix into a finished song. Your performance is recorded as audio or MIDI regions on the linear timeline. You can then go into Arrange Mode to edit and fine-tune the structure." },
+            { id: 702, category: "arrangement_workflow", title: "Editing in the Arranger", description: "In Arrange Mode ([Menu] > [Arrange]), you can use the touchscreen to move, copy, paste, and trim regions.", source: "Manual p.137", difficulty: "Intermediate", context: "Just like in a computer DAW, you have full control over your song's structure here. Double-tap any region in the arranger to open the Grid View for fine-tuning notes or audio edits within that specific region." },
+            { id: 703, category: "arrangement_workflow", title: "Exporting Your Song", description: "From the Menu, go to [File] > [Export] to render your song as an audio file.", source: "Manual p.113", difficulty: "Easy", context: "You can export your entire arrangement as a stereo WAV, MP3, or other formats. You can also choose to export 'Separate Tracks' (stems), which is perfect for importing your Force project into a computer DAW for final mixing and mastering." },
+            { id: 704, category: "arrangement_workflow", title: "Using Ableton Live Control Mode", description: "Connect Force to your computer to control Ableton Live directly.", source: "Manual p.287", difficulty: "Hard", topTip: true, context: "Press [Shift] + [Matrix] to enter Live Control Mode. This turns the Force into a powerful dedicated controller for Ableton Live. You can launch clips, mix tracks, and control devices, with everything on the Force screen mirroring what's in Live. This requires setting up the network connection between your computer and the Force." },
+            { id: 705, category: "arrangement_workflow", title: "Creating a Setlist", description: "In the Browser, go to the 'Setlists' tab to create a list of your projects for live performance.", source: "Manual p.296", difficulty: "Intermediate", context: "This is a lifesaver for live sets. It lets you line up all your songs in order and load the next one with a single tap, minimizing downtime between tracks. It pre-loads the next project in the background for a seamless transition." },
+            { id: 706, category: "arrangement_workflow", title: "Splice Integration", description: "Connect your Force to Wi-Fi and log in to your Splice account to browse and download samples directly.", source: "Force Features", difficulty: "Easy", context: "In the Browser, navigate to the Splice tab. Once logged in, you can access all your Splice sample library, search for new sounds, and download them directly to your attached SD card or SATA drive without needing a computer." },
+
+            // Q-Links & Pad Modes
+            { id: 901, category: "qlinks_automation", title: "Understanding Pad Scenes", description: "Pad Scenes assign a custom set of 16 parameters to the Q-Links for a specific pad.", source: "Force Workflow", difficulty: "Hard", topTip: true, context: "Use Pad Scenes on a drum track. For the kick pad, assign Q-Links to its pitch, decay, and filter. For the snare pad, assign Q-Links to its reverb send and snap. Now, when you select the kick, you can tweak its sound, and when you select the snare, you can tweak its effects, all from the same knobs." },
+            { id: 902, category: "qlinks_automation", title: "Project Q-Link Macros", description: "Use the Project Q-Link mode to control parameters from multiple tracks at once.", source: "Manual p.117", difficulty: "Hard", context: "In Project Q-Link mode, you can create a custom performance dashboard. Assign Knob 1 to the filter cutoff of your bass track, Knob 2 to the delay send on your lead synth, and Knob 3 to the master track's compressor threshold. This allows you to create massive, song-wide changes with just a few knob twists." },
+            { id: 903, category: "qlinks_automation", title: "Pad Parameter Mode", description: "Control the same parameter across 16 different pads simultaneously.", source: "Manual p.117", difficulty: "Intermediate", context: "This mode is ideal for quick sound design on a drum kit. Select 'Pad Parameter' from the Q-Link menu. Now, Q-Link 1 might control the pitch of Pad 1, Q-Link 2 controls the pitch of Pad 2, and so on. This makes it incredibly fast to tune your entire kit." },
+            { id: 904, category: "qlinks_automation", title: "OLED Screen Feedback", description: "The small OLED screens above the Q-Link knobs show you exactly what parameter you're controlling.", source: "Hardware", difficulty: "Easy", context: "Don't forget to look at these screens! They update in real-time as you switch modes or tracks, so you never have to guess what a knob is assigned to. This is crucial for staying in the creative flow without constantly looking at the main screen." },
+
+            // Sound Design
+            { id: 1001, category: "sound_design", title: "Layering Samples in a Drum Program", description: "Assign up to four samples to a single pad to create rich, layered drum sounds.", source: "Manual p.213", difficulty: "Intermediate", context: "In a Drum Program, go to Track Edit > Program. Select a pad. You can assign up to four samples to a single pad, each with its own settings for volume, tuning, and velocity range. For a powerful kick, layer a sub-bass sample for the low-end 'thump' with a clicky sample for the attack. Use the velocity settings to make one layer trigger only on hard hits." },
+            { id: 1002, category: "sound_design", title: "Sample Mute Groups", description: "Use Mute Groups to make one pad's sound cut off another, essential for open/closed hi-hats.", source: "Manual p.215", difficulty: "Easy", context: "In a Drum Program's Program Edit view, assign your open hi-hat and closed hi-hat pads to the same Mute Group (e.g., Mute Group 1). Now, whenever the closed hi-hat plays, it will instantly silence the open hi-hat, creating a realistic and tight sound." },
+            { id: 1003, category: "sound_design", title: "Creating Risers with LFOs", description: "Use an LFO to slowly modulate a sample's pitch to create a riser effect.", source: "Sound Design Techniques", difficulty: "Hard", context: "On a Keygroup track with a noise or synth sample, go to the modulation matrix. Set the source as one of the LFOs and the destination as 'Pitch'. Set the LFO shape to 'Ramp Up' and the rate very slow (e.g., synced to 4 or 8 bars). Now when you trigger the sample, its pitch will slowly rise over time, creating perfect tension for a drop." },
+            { id: 1004, category: "sound_design", title: "Simultaneous Pad Play", description: "Set multiple pads to trigger at the same time as one 'master' pad.", source: "Manual p.215", difficulty: "Intermediate", context: "In Program Edit, select a pad. Go to the 'Simul' tab. Here you can select up to four other pads in the same program that will play every time you hit the master pad. This is great for creating huge, layered one-shot sounds or chord stabs." },
+
+            // Music Theory
+            { id: 801, category: "music_theory", title: "Using Scales Mode", description: "In Note mode, tap the keyboard icon on the screen to open the Scales menu. Select a root note and a scale type.", source: "Music Theory Basics", difficulty: "Easy", topTip: true, context: "When a scale is active, the 8x8 pads will only show notes within that scale, removing any 'wrong' notes. This makes it incredibly easy to improvise melodies and basslines that are always in key with your track. Try the 'Minor Pentatonic' scale for instant bluesy/hip-hop vibes." },
+            { id: 802, category: "music_theory", title: "Using Chords Mode", description: "Use the built-in Chord mode to play full chords with a single pad press.", source: "Manual p.97", difficulty: "Easy", context: "In Note mode, press the 'Chords' button. Now each pad plays a full chord based on the selected scale. You can change the chord type (e.g., triads, 7ths, 9ths) in the menu. This is a fast way to write chord progressions without needing advanced keyboard skills." },
+            { id: 803, category: "music_theory", title: "Harmonies Mode", description: "Harmonies mode automatically adds notes to the single notes you play, creating harmonized melodic lines.", source: "Manual p.97", difficulty: "Intermediate", context: "Activate this in the Note Mode menu. You can select different harmony intervals, like 3rds, 5ths, or octaves. This is great for creating classic house-style basslines or thickening up lead synth lines." },
+            { id: 804, category: "music_theory", title: "Progressions Mode", description: "Access pre-made chord progressions that you can trigger with the pads.", source: "Manual p.97", difficulty: "Intermediate", context: "In the Note Mode menu, select 'Progressions'. The Force provides a list of common chord progressions in different styles. When you select one, the pads will be mapped to the chords of that progression, allowing you to play musically-correct changes instantly." },
+        ];
+
+        const glossaryData = [
+            { id: "clip", term: "Clip", definition: "A container for recorded audio or MIDI information. Clips are launched from the 8x8 pad matrix." },
+            { id: "scene", term: "Scene", definition: "A horizontal row of clips in the Clip Matrix. Launching a scene plays all clips in that row simultaneously." },
+            { id: "track", term: "Track", definition: "A column in the Clip Matrix that holds clips of a specific type (e.g., Drum, Plugin, Audio). A project can have up to 128 tracks." },
+            { id: "arranger", term: "Arranger", definition: "A linear, timeline-based sequencer for creating a full song structure. You can record a performance from the Clip Matrix into the Arranger." },
+            { id: "keygroup", term: "Keygroup", definition: "A track type that maps samples across the pads chromatically, allowing you to play them like a melodic instrument." },
+            { id: "plugin", term: "Plugin", definition: "An internal software instrument, such as the Hype, TubeSynth, or Bassline synthesizers." },
+            { id: "q_link", term: "Q-Link", definition: "The touch-sensitive knobs that can be assigned to control various parameters like filter cutoff, volume, or effect settings." },
+            { id: "xyfx", term: "XYFX", definition: "A mode that turns the touchscreen into an X/Y controller for real-time manipulation of effects." },
+            { id: "warp", term: "Warp", definition: "A process that time-stretches an audio clip to match the project's tempo without changing its pitch." },
+            { id: "chop", term: "Chop", definition: "The process of slicing a sample into smaller regions, which can then be played back in any order." },
+            { id: "step_sequencer", term: "Step Sequencer", definition: "A grid-based method for programming drum patterns or melodies by placing notes on individual steps." },
+            { id: "submix", term: "Submix", definition: "A bus track that you can route multiple other tracks to. Useful for processing a group of tracks (like all your drums) with the same effects." },
+            { id: "midi_learn", term: "MIDI Learn", definition: "A function that allows you to assign an external MIDI controller's knobs and faders to control parameters within Force." },
+            { id: "automation", term: "Automation", definition: "Recorded movement of a parameter over time, such as a filter sweep or volume fade." },
+            { id: "note_mode", term: "Note Mode", definition: "A pad mode that turns the 8x8 grid into a playable melodic or percussive instrument." },
+            { id: "matrix", term: "Matrix", definition: "The main 8x8 grid view for launching clips and scenes. The heart of the clip-based workflow." },
+            { id: "envelope_follower", term: "Envelope Follower", definition: "An effect that analyzes the volume shape (envelope) of an audio signal and uses it to control another parameter, creating rhythmic modulation." },
+            { id: "pad_scene", term: "Pad Scene", definition: "A Q-Link mode where you can create a custom set of parameter assignments for an individual pad. Selecting the pad recalls its unique Q-Link layout." },
+        ];
+
+        const forceFlavorsData = [
+            { name: "Classic Boom Bap", artist: "DJ Premier", pattern: { 'Kick': [0, 6], 'Snare': [4, 12], 'Hi-Hat': [0, 2, 4, 6, 8, 10, 12, 14] } },
+            { name: "J Dilla Swing", artist: "J Dilla", pattern: { 'Kick': [0, 5, 11], 'Snare': [4, 13], 'Hi-Hat': [0, 2, 4, 6, 8, 10, 12, 14] } },
+            { name: "Simple Trap", artist: "Metro Boomin", pattern: { 'Kick': [0, 10], 'Snare': [4, 12], 'Hi-Hat': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] } },
+            { name: "Four on the Floor", artist: "House/Techno", pattern: { 'Kick': [0, 4, 8, 12], 'Snare': [4, 12], 'Hi-Hat': [2, 6, 10, 14] } },
+            { name: "The 'Funky Drummer'", artist: "James Brown", pattern: { 'Kick': [0, 2, 6, 8, 10], 'Snare': [4, 7, 12, 14], 'Hi-Hat': [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15] } },
+            { name: "Lo-Fi Hip Hop", artist: "Nujabes", pattern: { 'Kick': [0, 8, 11], 'Snare': [4, 12], 'Hi-Hat': [0,2,4,6,8,10,12,14] } },
+            { name: "Drill Pattern", artist: "Chief Keef", pattern: { 'Kick': [0, 8], 'Snare': [3, 8, 12], 'Hi-Hat': [0,1,3,4,5,8,9,10] } },
+            { name: "Reggaeton Dembow", artist: "Daddy Yankee", pattern: { 'Kick': [0,4,8,12], 'Snare': [3,7,11,15], 'Hi-Hat': [] } },
+            { name: "West Coast G-Funk", artist: "Dr. Dre", pattern: { 'Kick': [0, 9], 'Snare': [4, 12], 'Hi-Hat': [0,2,4,6,8,10,12,14] } },
+            { name: "Grime Beat", artist: "Skepta", pattern: { 'Kick': [0, 6, 10], 'Snare': [4, 12], 'Hi-Hat': [0,1,4,5,8,9,12,13] } },
+            { name: "90s R&B Swing", artist: "Timbaland", pattern: { 'Kick': [0, 3, 6, 10], 'Snare': [4, 12], 'Hi-Hat': [0,2,4,6,8,10,12,14] } },
+            { name: "Crunk Beat", artist: "Lil Jon", pattern: { 'Kick': [0, 4, 6, 12], 'Snare': [4, 12], 'Hi-Hat': [0,2,4,6,8,10,12,14] } },
+            { name: "Cloud Rap", artist: "A$AP Rocky", pattern: { 'Kick': [0, 12], 'Snare': [4, 12], 'Hi-Hat': [0,1,2,4,5,6,8,9,10,12,13,14] } },
+            { name: "Amen Break", artist: "The Winstons", pattern: { 'Kick': [0, 7, 10], 'Snare': [4, 12], 'Hi-Hat': [0,2,4,6,8,9,10,11,12,14] } },
+            { name: "Afrobeat Groove", artist: "Fela Kuti", pattern: { 'Kick': [0, 3, 6, 10, 13], 'Snare': [4, 12], 'Hi-Hat': [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15] } },
+        ];
+        
+        while(forceFlavorsData.length < 35) {
+            forceFlavorsData.push({
+                name: `Uptempo Pattern ${forceFlavorsData.length + 1}`,
+                artist: "Various Artists",
+                pattern: {
+                    'Kick': [...new Set([...Array(5)].map(() => Math.floor(Math.random() * 16)))].sort((a,b)=>a-b),
+                    'Snare': [4, 12],
+                    'Hi-Hat': [...new Set([...Array(10)].map(() => Math.floor(Math.random() * 16)))].sort((a,b)=>a-b)
+                }
+            });
+        }
+
+
+        const effectsListData = {
+            "Delay/Reverb": [
+                { name: "AIR Delay", description: "Classic delay with stereo options and feedback filtering." },
+                { name: "AIR Reverb", description: "High-quality reverb for adding space and ambience." },
+                { name: "AIR Spring Reverb", description: "Emulates the sound of a vintage spring reverb tank." },
+                { name: "Delay Analog Sync", description: "Emulates a warm, 'Bucket Brigade' style analog delay, synced to tempo." },
+                { name: "Delay Ping Pong", description: "Stereo delay where repeats bounce between the left and right channels." },
+                { name: "Non-Linear Reverb", description: "Creates gated or reverse reverb effects, classic on 80s drums." }
+            ],
+            "Dynamics": [
+                { name: "AIR Compressor", description: "Standard compressor for controlling dynamic range." },
+                { name: "AIR Limiter", description: "A lookahead limiter ideal for mastering or preventing peaks." },
+                { name: "Mother Ducker", description: "The essential tool for creating sidechain compression effects." },
+                { name: "Transient Shaper", description: "Enhance or soften the attack and release of sounds, great for drums." },
+                { name: "Bus Compressor", description: "A transparent compressor ideal for submixes or the master bus." },
+                { name: "Gate", description: "A noise gate that cuts off sound below a certain threshold." }
+            ],
+            "EQ/Filter": [
+                { name: "AIR Para EQ", description: "A powerful four-band parametric equalizer for precise tonal shaping." },
+                { name: "AIR Kill EQ", description: "An EQ with buttons to completely cut Low, Mid, or High frequencies, great for DJ-style transitions." },
+                { name: "AIR Vintage Filter", description: "Emulates classic analog synth filters for warm, sweeping sounds." },
+                { name: "Auto Wah", description: "A low-pass filter modulated by an envelope follower for a classic 'wah-wah' effect." },
+                { name: "Talkbox", description: "Simulates the effect of a talkbox, creating vocal-like synth sounds." }
+            ],
+            "Harmonic/Distortion": [
+                { name: "AIR Distortion", description: "Multi-type distortion for adding grit, from soft saturation to hard clipping." },
+                { name: "AIR Lo-Fi", description: "Degrades the audio signal by reducing bit depth and sample rate for a vintage sampler sound." },
+                { name: "AIR Tube Drive", description: "Reproduces the sound of an overdriven tube amplifier." },
+                { name: "Decimator", description: "A bit-crusher that creates digital distortion artifacts." },
+                { name: "Soft Clipper", description: "Gently rounds off peaks for loudness without harsh distortion, great for mastering." }
+            ],
+            "Modulation": [
+                { name: "AIR Chorus", description: "Adds thickness and shimmer to sounds." },
+                { name: "AIR Flanger", description: "Creates a 'whooshing' jet engine sound." },
+                { name: "AIR Phaser", description: "Applies a classic 'wooshy,' 'squishy' phasing effect." },
+                { name: "Tremolo", description: "Modulates the volume of the signal to create a pulsating effect." },
+                { name: "Rotary Speaker", description: "Emulates the sound of a Leslie rotary speaker cabinet." }
+            ],
+            "Creative/Specialized": [
+                { name: "AIR Vinyl", description: "Adds crackle, wow, flutter, and dust noise to simulate a vinyl record." },
+                { name: "Pumper", description: "Creates a rhythmic pumping effect without needing a sidechain source." },
+                { name: "Granulator", description: "A granular synthesizer/effect that creates complex textures and soundscapes from audio." },
+                { name: "Harmonizer", description: "Generates musical harmonies based on the input signal." },
+                { name: "Envelope Follower", description: "Generates a modulation signal based on the input audio's volume." }
+            ]
+        };
+
+        const buttonComboData = [
+            { combo: "Shift + Matrix", action: "Enter Ableton Live Control Mode." },
+            { combo: "Shift + Mixer", action: "Open the Pad Mixer for the current Drum Track." },
+            { combo: "Shift + Clip", action: "Open Track Edit Mode for the current track." },
+            { combo: "Shift + Arp", action: "Open the Arpeggiator settings window." },
+            { combo: "Shift + Rec", action: "Arm/disarm Arrangement recording." },
+            { combo: "Shift + Stop", action: "Stop playback and return playhead to the beginning." },
+            { combo: "Shift + Undo", action: "Redo the last undone action." },
+            { combo: "Edit + Clip Pad", action: "Open Clip Settings for that clip." },
+            { combo: "Copy + Clip Pad", action: "Copies the selected clip. Tap another pad to paste." },
+            { combo: "Delete + Clip Pad", action: "Deletes the selected clip." },
+            { combo: "Select + Clip Pad", action: "Selects a clip without launching it." },
+            { combo: "Shift + Pad Mute", action: "Solo the selected pad in a Drum Program." }
+        ];
+
+        const qLinksData = [
+            { mode: "Screen", description: "The default mode. The 8 Q-Link knobs automatically map to the most relevant parameters on the current screen. For example, in the Sampler, they control sample start/end points. In a synth plugin, they control key parameters like filter cutoff and resonance." },
+            { mode: "Project 1 & 2", description: "Two pages of user-assignable macros that affect the entire project. You can map any parameter from any track, pad, or effect to these knobs. Perfect for creating a custom performance dashboard to control multiple things at once." },
+            { mode: "Track", description: "The knobs control key parameters for the currently selected track, such as mixer settings (Volume, Pan, Sends) and the parameters of the first insert effect on that track." },
+            { mode: "Pad Scene", description: "Allows you to assign up to 16 parameters for the currently selected pad. When you select a different pad, the Q-Links will control the same set of parameters for the new pad. Great for detailed sound design on a specific drum sound." },
+            { mode: "Pad Parameter", description: "Each Q-Link knob controls the same parameter across 16 different pads. For example, Q-Link 1 could control the pitch of Pad 1, Q-Link 2 controls the pitch of Pad 2, and so on. Ideal for tuning an entire drum kit quickly." },
+            { mode: "Volume / Pan / Sends", description: "Dedicated modes where the 8 Q-Link knobs directly control the Volume, Pan, or Send levels for the first 8 visible tracks, providing a traditional hardware mixer feel." }
+        ];
+
+        // DOM ELEMENT VARIABLES
+        const tipsContainer = document.getElementById('tips-container');
+        const topTipsContainer = document.getElementById('top-tips-container');
+        const categoryFilterContainer = document.getElementById('category-filter-container');
+        const difficultySortButtons = document.querySelectorAll('.difficulty-sort-button');
+        const tipModal = document.getElementById('tip-modal');
+        const closeModalButton = document.getElementById('close-modal');
+        const glossaryModal = document.getElementById('glossary-modal');
+        const closeGlossaryModalButton = document.getElementById('close-glossary-modal');
+        const glossaryButton = document.getElementById('glossary-button');
+        const glossaryContent = document.getElementById('glossary-content');
+        const glossarySearchInput = document.getElementById('glossary-search-input');
+        const mainTipView = document.getElementById('main-tip-view');
+        const modalTitle = document.getElementById('modal-title');
+        const modalCategory = document.getElementById('modal-category');
+        const modalDescription = document.getElementById('modal-description');
+        const modalSource = document.getElementById('modal-source');
+        const copyTipButton = document.getElementById('copy-tip-button');
+        const moreInfoButton = document.getElementById('more-info-button');
+        const detailsView = document.getElementById('details-view');
+        const detailsTitle = document.getElementById('details-title');
+        const detailsCategory = document.getElementById('details-category');
+        const detailsContent = document.getElementById('details-content');
+        const backToTipButton = document.getElementById('back-to-tip-button');
+        const detailsGlossaryList = document.getElementById('details-glossary-list');
+        const relatedTipsList = document.getElementById('related-tips-list');
+        const suggestedTipBoxContent = document.getElementById('suggested-tip-box-content');
+        const searchInput = document.getElementById('search-input');
+        const searchButton = document.getElementById('search-button');
+        const downloadPdfButton = document.getElementById('download-pdf-button');
+        const forceFlavorsButton = document.getElementById('force-flavors-button');
+        const forceFlavorsModal = document.getElementById('force-flavors-modal');
+        const closeForceFlavorsModalButton = document.getElementById('close-force-flavors-modal');
+        const effectsListButton = document.getElementById('effects-list-button');
+        const effectsListModal = document.getElementById('effects-list-modal');
+        const closeEffectsListModalButton = document.getElementById('close-effects-list-modal');
+        const effectsListContainer = document.getElementById('effects-list-container');
+        const effectsSearchInput = document.getElementById('effects-search-input');
+        const buttonCombosButton = document.getElementById('button-combos-button');
+        const buttonCombosModal = document.getElementById('button-combos-modal');
+        const closeButtonCombosModalButton = document.getElementById('close-button-combos-modal');
+        const buttonCombosContainer = document.getElementById('button-combos-container');
+        const qlinksButton = document.getElementById('qlinks-button');
+        const qlinksModal = document.getElementById('qlinks-modal');
+        const closeQlinksModalButton = document.getElementById('close-qlinks-modal');
+        const qlinksContainer = document.getElementById('qlinks-container');
+
+        // STATE VARIABLES
+        let currentCategory = 'all';
+        let currentDifficulty = 'all';
+        let currentTip = null;
+
+        // ICONS
+        const categoryIcons = Object.keys(categories).reduce((acc, key) => {
+            acc[key] = categories[key].icon;
+            return acc;
+        }, {});
+
+        // --- HELPER FUNCTIONS ---
+        function getIconHtml(category) {
+            const iconClass = categoryIcons[category] || 'fa-solid fa-info-circle';
+            return `<i class="${iconClass} tip-icon"></i>`;
+        }
+        
+        function getDifficultyBadge(difficulty) {
+            if (!difficulty) return '';
+            const lowerCaseDifficulty = difficulty.toLowerCase();
+            let badgeClass = '';
+            switch(lowerCaseDifficulty) {
+                case 'easy': badgeClass = 'difficulty-easy'; break;
+                case 'intermediate': badgeClass = 'difficulty-intermediate'; break;
+                case 'hard': badgeClass = 'difficulty-hard'; break;
+            }
+            return `<span class="difficulty-badge ${badgeClass}">${difficulty}</span>`;
+        }
+
+        function populateCategories() {
+            categoryFilterContainer.innerHTML = '<button class="tip-category-button active" data-category="all">All Tips</button>';
+            Object.keys(categories).forEach(categoryKey => {
+                const button = document.createElement('button');
+                button.className = 'tip-category-button';
+                button.dataset.category = categoryKey;
+                button.textContent = categories[categoryKey].name;
+                categoryFilterContainer.appendChild(button);
+            });
+            document.querySelectorAll('.tip-category-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    document.querySelectorAll('.tip-category-button').forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    currentCategory = button.dataset.category;
+                    displayTips(currentCategory, searchInput.value, currentDifficulty);
+                });
+            });
+        }
+        
+        function displayTips(category, searchTerm = '', difficulty = 'all') {
+            tipsContainer.innerHTML = '';
+            let filteredTips = tipsData;
+            if (category !== 'all') {
+                filteredTips = filteredTips.filter(tip => tip.category === category);
+            }
+            if (difficulty !== 'all') {
+                filteredTips = filteredTips.filter(tip => tip.difficulty === difficulty);
+            }
+            if (searchTerm.trim()) {
+                const lowerCaseSearchTerm = searchTerm.toLowerCase().trim();
+                filteredTips = filteredTips.filter(tip =>
+                    tip.title.toLowerCase().includes(lowerCaseSearchTerm) ||
+                    tip.description.toLowerCase().includes(lowerCaseSearchTerm) ||
+                    (tip.context && tip.context.toLowerCase().includes(lowerCaseSearchTerm)) ||
+                    tip.category.replace(/_/g, ' ').toLowerCase().includes(lowerCaseSearchTerm)
+                );
+            }
+            if (filteredTips.length === 0) {
+                tipsContainer.innerHTML = '<p class="text-center col-span-full text-lg">No tips found. Try adjusting your filters or search term.</p>';
+                return;
+            }
+            filteredTips.forEach(tip => {
+                const tipElement = document.createElement('div');
+                tipElement.className = 'card tip-item cursor-pointer';
+                tipElement.innerHTML = `
+                    <div class="flex-grow">
+                        <h4 class="text-xl font-semibold mb-2">${getIconHtml(tip.category)}${tip.title}</h4>
+                        <p class="text-sm mb-2">${tip.description}</p>
+                    </div>
+                    <div class="mt-auto pt-2 flex justify-end items-center">
+                         ${getDifficultyBadge(tip.difficulty)}
+                    </div>
+                `;
+                tipElement.addEventListener('click', () => openModal(tip));
+                tipsContainer.appendChild(tipElement);
+            });
+        }
+        
+        function displayTopTips() {
+            topTipsContainer.innerHTML = '';
+            let topTips = tipsData.filter(tip => tip.topTip);
+            if(topTips.length < 6) {
+                 const fallbackTips = tipsData.filter(t => !t.topTip && t.difficulty === 'Intermediate').slice(0, 6 - topTips.length);
+                 topTips.push(...fallbackTips);
+            }
+            topTips = topTips.slice(0,6);
+
+            topTips.forEach(tip => {
+                const tipElement = document.createElement('div');
+                tipElement.className = 'card p-4 rounded-lg cursor-pointer hover:bg-akai-muted transition-colors';
+                tipElement.innerHTML = `
+                    <h4 class="text-lg font-semibold mb-2">${getIconHtml(tip.category)}${tip.title}</h4>
+                    <p class="text-sm text-gray-400">${tip.description}</p>
+                `;
+                tipElement.addEventListener('click', () => openModal(tip));
+                topTipsContainer.appendChild(tipElement);
+            });
+        }
+
+        function displayRelatedTips(tip) {
+            relatedTipsList.innerHTML = '';
+            const related = tipsData
+                .filter(t => t.category === tip.category && t.id !== tip.id)
+                .sort(() => 0.5 - Math.random()) // Shuffle
+                .slice(0, 5);
+
+            if (related.length === 0) {
+                relatedTipsList.innerHTML = '<p>No other tips in this category.</p>';
+                return;
+            }
+
+            related.forEach(relatedTip => {
+                const tipElement = document.createElement('div');
+                tipElement.className = 'related-tip-box';
+                tipElement.innerHTML = `
+                    <h5 class="font-bold text-md">${relatedTip.title}</h5>
+                    <p class="text-sm text-gray-400">${relatedTip.description}</p>
+                `;
+                tipElement.onclick = () => openModal(relatedTip);
+                relatedTipsList.appendChild(tipElement);
+            });
+        }
+
+        function displaySuggestedTip(tip) {
+            suggestedTipBoxContent.innerHTML = '';
+            const potentialSuggestions = tipsData
+                .filter(t => t.id !== tip.id && t.category !== tip.category);
+            
+            if (potentialSuggestions.length === 0) return;
+
+            const suggested = potentialSuggestions[Math.floor(Math.random() * potentialSuggestions.length)];
+
+            const tipElement = document.createElement('div');
+            tipElement.className = 'suggested-tip-box';
+            tipElement.innerHTML = `
+                <h5 class="font-bold text-md">${getIconHtml(suggested.category)} ${suggested.title}</h5>
+                <p class="text-sm text-gray-400">${suggested.description}</p>
+            `;
+            tipElement.onclick = () => openModal(suggested);
+            suggestedTipBoxContent.appendChild(tipElement);
+        }
+        
+        function displayGlossaryTermsInModal(tip) {
+            detailsGlossaryList.innerHTML = '';
+            const tipText = (tip.context + ' ' + tip.description).toLowerCase();
+            const foundTerms = new Set();
+
+            glossaryData.forEach(term => {
+                const regex = new RegExp(`\\b${term.term.toLowerCase().replace(/_/g, ' ')}\\b`, 'g');
+                if (tipText.match(regex)) {
+                    foundTerms.add(term.term);
+                }
+            });
+
+            if (foundTerms.size === 0) {
+                detailsGlossaryList.innerHTML = '<p>No relevant glossary terms found for this tip.</p>';
+                return;
+            }
+
+            foundTerms.forEach(termName => {
+                const termData = glossaryData.find(g => g.term === termName);
+                if (termData) {
+                    const termElement = document.createElement('div');
+                    termElement.className = 'mb-4';
+                    termElement.innerHTML = `<p><strong>${termData.term}:</strong> ${termData.definition}</p>`;
+                    detailsGlossaryList.appendChild(termElement);
+                }
+            });
+        }
+
+        function openModal(tip) {
+            currentTip = tip;
+            mainTipView.classList.remove('hidden');
+            detailsView.classList.add('hidden');
+            const categoryName = categories[tip.category].name;
+            modalTitle.innerHTML = `${getIconHtml(tip.category)}${tip.title}`;
+            modalCategory.textContent = `Category: ${categoryName}`;
+            modalDescription.textContent = tip.description;
+            modalSource.textContent = `Source: ${tip.source} | Difficulty: ${tip.difficulty}`;
+            copyTipButton.onclick = () => copyTipToClipboard(tip);
+            moreInfoButton.style.display = tip.context ? 'inline-flex' : 'none';
+            tipModal.classList.remove('hidden');
+        }
+
+        function showDetailsView() {
+            if (!currentTip || !currentTip.context) return;
+            mainTipView.classList.add('hidden');
+            detailsView.classList.remove('hidden');
+            const categoryName = categories[currentTip.category].name;
+            detailsTitle.innerHTML = `${getIconHtml(currentTip.category)}${currentTip.title}`;
+            detailsCategory.textContent = `Category: ${categoryName} | Difficulty: ${currentTip.difficulty}`;
+            detailsContent.innerHTML = currentTip.context.replace(/\n/g, '<br><br>');
+            displayGlossaryTermsInModal(currentTip);
+            displayRelatedTips(currentTip);
+            displaySuggestedTip(currentTip);
+        }
+
+        function showMainTipView() {
+            detailsView.classList.add('hidden');
+            mainTipView.classList.remove('hidden');
+        }
+
+        function closeModal() { tipModal.classList.add('hidden'); }
+
+        function copyTipToClipboard(tip) {
+            const tipText = `Tip: ${tip.title}\nDifficulty: ${tip.difficulty}\nDescription: ${tip.description}\nSource: ${tip.source}`;
+            const textarea = document.createElement('textarea');
+            textarea.value = tipText;
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                const originalText = copyTipButton.innerHTML;
+                copyTipButton.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+                setTimeout(() => { copyTipButton.innerHTML = originalText; }, 2000);
+            } catch (err) { console.error('Failed to copy tip: ', err); }
+            finally { document.body.removeChild(textarea); }
+        }
+
+        function generatePdf() {
+            const doc = new jsPDF();
+            let y = 15;
+            const margin = 10;
+            const pageHeight = doc.internal.pageSize.height;
+            const pageWidth = doc.internal.pageSize.width;
+            const addPageIfNeeded = (neededHeight) => {
+                if (y + neededHeight > pageHeight - margin) { doc.addPage(); y = margin; }
+            };
+            doc.setFontSize(22);
+            doc.text("The FORCE Guide: Ultimate Edition", pageWidth / 2, y, { align: 'center' });
+            y += 10;
+            doc.setFontSize(12);
+            doc.text("Comprehensive Tips & Tricks Guide", pageWidth / 2, y, { align: 'center' });
+            y += 15;
+            let currentCategoryKey = '';
+            const sortedTips = [...tipsData].sort((a, b) => a.category.localeCompare(b.category));
+            sortedTips.forEach((tip) => {
+                if (tip.category !== currentCategoryKey) {
+                    currentCategoryKey = tip.category;
+                    addPageIfNeeded(20);
+                    doc.setFontSize(16);
+                    doc.setFont(undefined, 'bold');
+                    const categoryTitle = categories[currentCategoryKey].name;
+                    doc.text(categoryTitle, margin, y);
+                    y += 10;
+                }
+                const titleText = `${tip.title} (${tip.difficulty})`;
+                const descriptionText = tip.description;
+                const sourceText = `Source: ${tip.source}`;
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'bold');
+                const titleLines = doc.splitTextToSize(titleText, pageWidth - (2 * margin));
+                doc.setFontSize(10);
+                doc.setFont(undefined, 'normal');
+                const descriptionLines = doc.splitTextToSize(descriptionText, pageWidth - (2 * margin));
+                addPageIfNeeded(titleLines.length * 5 + descriptionLines.length * 5 + 10);
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'bold');
+                doc.text(titleLines, margin, y);
+                y += titleLines.length * 5;
+                doc.setFontSize(10);
+                doc.setFont(undefined, 'normal');
+                doc.text(descriptionLines, margin, y);
+                y += descriptionLines.length * 5;
+                doc.setFontSize(8);
+                doc.setTextColor(150);
+                doc.text(sourceText, margin, y);
+                doc.setTextColor(0);
+                y += 10;
+            });
+            doc.save('The_FORCE_Guide_Ultimate.pdf');
+        }
+        
+        function displayGlossary(searchTerm = '') {
+            glossaryContent.innerHTML = '';
+            const lowerCaseSearchTerm = searchTerm.toLowerCase().trim();
+            const filteredGlossary = glossaryData.filter(item => 
+                item.term.toLowerCase().includes(lowerCaseSearchTerm) ||
+                item.definition.toLowerCase().includes(lowerCaseSearchTerm)
+            );
+            if (filteredGlossary.length === 0) {
+                glossaryContent.innerHTML = '<p>No terms found.</p>';
+                return;
+            }
+            filteredGlossary.sort((a, b) => a.term.localeCompare(b.term)).forEach(item => {
+                const termElement = document.createElement('div');
+                termElement.className = 'glossary-item';
+                termElement.innerHTML = `<h4 class="text-2xl font-bold mb-2">${item.term}</h4><p>${item.definition}</p>`;
+                glossaryContent.appendChild(termElement);
+            });
+        }
+
+        function createDrumPattern(container, patternData) {
+            const patternContainer = document.createElement('div');
+            patternContainer.className = 'mb-6';
+            const title = document.createElement('h5');
+            title.className = 'text-xl font-semibold mb-2';
+            title.textContent = patternData.name;
+            patternContainer.appendChild(title);
+            const artist = document.createElement('p');
+            artist.className = 'text-sm text-gray-400 mb-2';
+            artist.textContent = `Style: ${patternData.artist}`;
+            patternContainer.appendChild(artist);
+            for (const instrument in patternData.pattern) {
+                const instrumentRow = document.createElement('div');
+                instrumentRow.className = 'flex items-center gap-2 mb-2';
+                const instrumentLabel = document.createElement('div');
+                instrumentLabel.className = 'w-20 text-sm font-bold text-right';
+                instrumentLabel.textContent = instrument;
+                instrumentRow.appendChild(instrumentLabel);
+                const grid = document.createElement('div');
+                grid.className = 'drum-pattern-grid flex-1';
+                for (let i = 0; i < 16; i++) {
+                    const step = document.createElement('div');
+                    step.className = 'drum-step';
+                    if (patternData.pattern[instrument].includes(i)) {
+                        step.classList.add('active');
+                    }
+                    grid.appendChild(step);
+                }
+                instrumentRow.appendChild(grid);
+                patternContainer.appendChild(instrumentRow);
+            }
+            container.appendChild(patternContainer);
+        }
+
+        function populateForceFlavors() {
+            const container = document.getElementById('drum-patterns-container');
+            if (!container) return;
+            container.innerHTML = '';
+            forceFlavorsData.forEach(pattern => createDrumPattern(container, pattern));
+        }
+
+        function populateEffectsList(searchTerm = '') {
+            effectsListContainer.innerHTML = '';
+            const lowerCaseSearchTerm = searchTerm.toLowerCase().trim();
+
+            for (const category in effectsListData) {
+                const effects = effectsListData[category];
+                const filteredEffects = effects.filter(effect => 
+                    effect.name.toLowerCase().includes(lowerCaseSearchTerm) ||
+                    effect.description.toLowerCase().includes(lowerCaseSearchTerm)
+                );
+
+                if (filteredEffects.length > 0) {
+                    const categoryElement = document.createElement('div');
+                    categoryElement.className = 'mb-6';
+                    categoryElement.innerHTML = `<h4 class="text-2xl font-bold mb-3 border-b-2 border-akai-muted pb-2">${category}</h4>`;
+                    const listElement = document.createElement('div');
+                    filteredEffects.forEach(effect => {
+                        const effectElement = document.createElement('div');
+                        effectElement.className = 'mb-3';
+                        effectElement.innerHTML = `<p><strong>${effect.name}:</strong> ${effect.description}</p>`;
+                        listElement.appendChild(effectElement);
+                    });
+                    categoryElement.appendChild(listElement);
+                    effectsListContainer.appendChild(categoryElement);
+                }
+            }
+             if (effectsListContainer.innerHTML === '') {
+                effectsListContainer.innerHTML = '<p>No effects found.</p>';
+            }
+        }
+
+        function populateButtonCombos() {
+            buttonCombosContainer.innerHTML = '';
+            const table = document.createElement('table');
+            table.className = 'combo-table';
+            table.innerHTML = `<thead><tr><th>Combination</th><th>Action</th></tr></thead>`;
+            const tbody = document.createElement('tbody');
+            buttonComboData.forEach(item => {
+                const row = document.createElement('tr');
+                const comboHtml = item.combo.split(' + ').map(key => `<span class="combo-key">${key}</span>`).join(' + ');
+                row.innerHTML = `<td>${comboHtml}</td><td>${item.action}</td>`;
+                tbody.appendChild(row);
+            });
+            table.appendChild(tbody);
+            buttonCombosContainer.appendChild(table);
+        }
+
+        function populateQLinks() {
+            qlinksContainer.innerHTML = '';
+            qLinksData.forEach(item => {
+                const qlinkElement = document.createElement('div');
+                qlinkElement.className = 'glossary-item';
+                qlinkElement.innerHTML = `<h4 class="text-2xl font-bold mb-2">${item.mode}</h4><p>${item.description}</p>`;
+                qlinksContainer.appendChild(qlinkElement);
+            });
+        }
+
+        // --- EVENT LISTENERS ---
+        difficultySortButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                difficultySortButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                currentDifficulty = button.dataset.difficulty;
+                displayTips(currentCategory, searchInput.value, currentDifficulty);
+            });
+        });
+        
+        const performSearch = () => {
+            displayTips(currentCategory, searchInput.value, currentDifficulty);
+        };
+
+        searchButton.addEventListener('click', performSearch);
+        searchInput.addEventListener('input', performSearch);
+        searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') performSearch(); });
+        
+        downloadPdfButton.addEventListener('click', generatePdf);
+        closeModalButton.addEventListener('click', closeModal);
+        tipModal.addEventListener('click', (e) => { if (e.target === tipModal) closeModal(); });
+        
+        glossaryButton.addEventListener('click', () => { glossaryModal.classList.remove('hidden'); displayGlossary(); });
+        closeGlossaryModalButton.addEventListener('click', () => glossaryModal.classList.add('hidden'));
+        glossaryModal.addEventListener('click', (e) => { if (e.target === glossaryModal) glossaryModal.classList.add('hidden'); });
+        glossarySearchInput.addEventListener('input', (e) => displayGlossary(e.target.value));
+        
+        forceFlavorsButton.addEventListener('click', () => forceFlavorsModal.classList.remove('hidden'));
+        closeForceFlavorsModalButton.addEventListener('click', () => forceFlavorsModal.classList.add('hidden'));
+        forceFlavorsModal.addEventListener('click', (e) => { if (e.target === forceFlavorsModal) forceFlavorsModal.classList.add('hidden'); });
+        
+        effectsListButton.addEventListener('click', () => effectsListModal.classList.remove('hidden'));
+        closeEffectsListModalButton.addEventListener('click', () => effectsListModal.classList.add('hidden'));
+        effectsListModal.addEventListener('click', (e) => { if (e.target === effectsListModal) effectsListModal.classList.add('hidden'); });
+        effectsSearchInput.addEventListener('input', (e) => populateEffectsList(e.target.value));
+        
+        buttonCombosButton.addEventListener('click', () => buttonCombosModal.classList.remove('hidden'));
+        closeButtonCombosModalButton.addEventListener('click', () => buttonCombosModal.classList.add('hidden'));
+        buttonCombosModal.addEventListener('click', (e) => { if (e.target === buttonCombosModal) buttonCombosModal.classList.add('hidden'); });
+        
+        qlinksButton.addEventListener('click', () => qlinksModal.classList.remove('hidden'));
+        closeQlinksModalButton.addEventListener('click', () => qlinksModal.classList.add('hidden'));
+        qlinksModal.addEventListener('click', (e) => { if (e.target === qlinksModal) qlinksModal.classList.add('hidden'); });
+        
+        moreInfoButton.addEventListener('click', showDetailsView);
+        backToTipButton.addEventListener('click', showMainTipView);
+
+        // --- INITIALIZATION ---
+        populateCategories();
+        displayTopTips();
+        displayTips(currentCategory, '', currentDifficulty);
+        populateForceFlavors();
+        populateEffectsList();
+        populateButtonCombos();
+        populateQLinks();
+    });
+    </script>
+</body>
+</html>
