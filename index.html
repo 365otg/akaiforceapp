@@ -399,6 +399,8 @@
 
         const categories = {
             concepts_setup: { name: "Concepts & Setup", icon: "fa-solid fa-lightbulb" },
+            menus_screens: { name: "Menus & Screens", icon: "fa-solid fa-display" },
+            hardware_controls: { name: "Hardware Controls", icon: "fa-solid fa-toggle-on" },
             clips_scenes_launching: { name: "Clips, Scenes & Launching", icon: "fa-solid fa-rocket" },
             track_types_workflow: { name: "Track Types & Workflow", icon: "fa-solid fa-layer-group" },
             sequencing_recording: { name: "Sequencing & Recording", icon: "fa-solid fa-border-all" },
@@ -421,6 +423,25 @@
             { id: 105, category: "concepts_setup", title: "Standalone vs. Computer Mode", description: "Force can run entirely on its own (Standalone) or connected to a computer as a controller (Computer Mode).", source: "Manual p.12", difficulty: "Easy", context: "In Standalone Mode, Force is a complete production station. In Computer Mode, it can become a powerful controller for Ableton Live (via Ableton Link) or act as an audio interface for your DAW. To switch, go to Menu > and tap the Force icon in the top left." },
             { id: 106, category: "concepts_setup", title: "Project Templates", description: "Create and save project templates to speed up your workflow.", source: "Force Workflow", difficulty: "Intermediate", context: "Set up a project with your favorite drum kits, synth plugins, and submix routing (e.g., a drum bus, a synth bus). Then, go to the Save menu and save it as a Template. Now, when you start a new project, you can load this template and have all your go-to sounds and routing ready instantly." },
             { id: 107, category: "concepts_setup", title: "File System Management", description: "Organize your samples and projects in folders on your drive for quick access via the Browser.", source: "Best Practices", difficulty: "Easy", context: "Create a clear folder structure on your SD card or SATA drive. For example: 'Samples' > 'Drum Kits', 'Loops', 'Vocals'. And 'Projects' > 'Finished Tracks', 'Sketches'. A well-organized library makes finding sounds much faster and keeps your creative momentum going." },
+            
+            // Menus & Screens
+            { id: 1201, category: "menus_screens", title: "The Main Menu Screen", description: "Press the [Menu] button to access the Force's central hub for all major views and editors.", source: "Manual p.13", difficulty: "Easy", context: "The Menu screen gives you one-tap access to the Matrix, Mixer, Sampler, Sample Edit, Looper, and more. It's your primary navigation tool. The icons are arranged logically, grouping related functions like sampling and editing together. Use this as your home base when you need to switch tasks." },
+            { id: 1202, category: "menus_screens", title: "The Browser", description: "Press the [Load] button to open the Browser, where you find all your content.", source: "Manual p.18", difficulty: "Easy", context: "The Browser is split into two main sections: Places (your connected drives, SD card, Splice) and Content (Projects, Samples, Kits, etc.). Use the tabs to filter what you're looking for. You can preview samples by tapping them before loading them into your project." },
+            { id: 1203, category: "menus_screens", title: "The Mixer Screen", description: "Press the [Mixer] button for a traditional mixing console view of your project.", source: "Manual p.24", difficulty: "Intermediate", context: "The Mixer shows faders for all your tracks, submixes, returns, and the master output. At the bottom are critical tabs: 'Pan/Vol' for basic mixing, 'Sends' to route audio to your return tracks (for reverb/delay), 'Effects' to add and edit insert effects, and 'I/O' to manage audio routing between tracks and submixes." },
+            { id: 1204, category: "menus_screens", title: "The Clip Edit Screen", description: "Press the [Clip] button to edit parameters for the currently selected clip.", source: "Manual p.21", difficulty: "Easy", context: "This screen is context-sensitive. For an audio clip, you'll see options for tuning, gain, and start/end points. For a MIDI clip, you'll see options for transposition and clip length. This is also where you set a clip's Launch Mode (Toggle, Trigger, etc.)." },
+            { id: 1205, category: "menus_screens", title: "The Sampler Screen", description: "Access via [Menu] > [Sampler]. This is where you record new audio into the Force.", source: "Manual p.38", difficulty: "Intermediate", context: "On this screen, you must first select your Input Source (e.g., external inputs 1/2 or internal Resample). You can then set the recording threshold (so it starts recording automatically), monitor the input level, and arm the sampler. Once armed, hit 'Start' or play a sound louder than the threshold to begin recording." },
+            { id: 1206, category: "menus_screens", title: "The Sample Edit Screen", description: "Access via [Menu] > [Sample Edit]. This is where you manipulate recorded or loaded audio.", source: "Manual p.36", difficulty: "Hard", context: "This powerful screen has several modes: Trim/Loop (for setting start/end points and looping), Chop (for slicing samples into individual hits), and Process (for applying destructive effects like Normalize, Reverse, or Fade In/Out). Mastering this screen is key to becoming a power user." },
+            
+            // Hardware Controls
+            { id: 1101, category: "hardware_controls", title: "Transport: Play/Start", description: "Starts playback of the current arrangement or selected clips.", source: "Manual p.9", difficulty: "Easy", context: "Press once to start playback from the current playhead position. Pressing it again will restart playback from the beginning of the project or loop." },
+            { id: 1102, category: "hardware_controls", title: "Transport: Stop", description: "Stops playback. Press twice to return the playhead to the beginning.", source: "Manual p.9", difficulty: "Easy", context: "A single press stops the music immediately. A quick double-press is a workflow shortcut to stop and rewind, ready for another take." },
+            { id: 1103, category: "hardware_controls", title: "Transport: Rec", description: "Arms and initiates recording for MIDI or audio.", source: "Manual p.9", difficulty: "Easy", context: "When a track is record-armed, pressing Rec will start recording into the selected clip. If a clip is already playing, it will enable overdub recording, allowing you to add new notes or automation without erasing the original content." },
+            { id: 1104, category: "hardware_controls", title: "Shift Button", description: "Accesses secondary functions for many buttons, printed in red text.", source: "Manual p.8", difficulty: "Easy", context: "The Shift button is your key to unlocking the Force's deeper functionality. For example, Shift + Mixer opens the Pad Mixer, and Shift + Undo performs a Redo. Always check for red text below buttons to discover hidden features." },
+            { id: 1105, category: "hardware_controls", title: "Mode Buttons (Matrix, Note, etc.)", description: "These buttons change the function of the 8x8 pad grid.", source: "Manual p.8", difficulty: "Easy", context: "Matrix is for launching clips. Note turns the pads into a playable instrument. Step Seq turns them into a step sequencer. Clip lets you edit clip parameters. Mastering these modes is key to a fast workflow." },
+            { id: 1106, category: "hardware_controls", title: "Data Dial & Cursors", description: "Used for navigating menus, selecting items, and adjusting parameter values.", source: "Manual p.7", difficulty: "Easy", context: "The large data dial is for fine adjustments and scrolling through long lists. The cursor buttons provide tactile, step-by-step navigation on the screen. Pressing the data dial often acts as an 'Enter' or 'Confirm' command." },
+            { id: 1107, category: "hardware_controls", title: "Knobs Button (Q-Links)", description: "Cycles through the different control modes for the 8 rotary knobs.", source: "Manual p.10", difficulty: "Intermediate", context: "Pressing this button cycles the Q-Link knobs through controlling Screen parameters, Project-wide macros, Track parameters, and more. The OLED screens above the knobs tell you what they are currently assigned to." },
+            { id: 1108, category: "hardware_controls", title: "Assign A / Assign B", description: "Assigns tracks to the A or B side of the crossfader for performance mixing.", source: "Manual p.10", difficulty: "Easy", context: "Hold Assign A and press a track's button (above the pads) to assign it to the left side of the crossfader. Use Assign B for the right side. This allows for DJ-style blending between different groups of instruments." },
+            { id: 1109, category: "hardware_controls", title: "Mute / Solo Buttons", description: "Mutes or solos the currently selected track.", source: "Manual p.9", difficulty: "Easy", context: "These dedicated buttons are essential for mixing and arranging. Hold Shift + Mute to enter a 'momentary' mute mode, where tracks are only muted while you hold their pads. Hold Solo to see which tracks are currently soloed." },
 
             // Clips, Scenes & Launching
             { id: 201, category: "clips_scenes_launching", title: "Launching a Single Clip", description: "In Matrix mode, press any pad on the 8x8 grid to launch the corresponding clip.", source: "Manual p.8", difficulty: "Easy", topTip: true, context: "This is the most fundamental action on the Force. A playing clip will blink green. A queued clip will blink yellow. Only one clip per track (column) can play at a time, unless you change the track's launch mode." },
@@ -899,47 +920,68 @@
             const pageHeight = doc.internal.pageSize.height;
             const pageWidth = doc.internal.pageSize.width;
             const addPageIfNeeded = (neededHeight) => {
-                if (y + neededHeight > pageHeight - margin) { doc.addPage(); y = margin; }
+                if (y + neededHeight > pageHeight - (margin * 2)) { // Increased bottom margin for safety
+                    doc.addPage(); 
+                    y = margin; 
+                }
             };
+
             doc.setFontSize(22);
             doc.text("The FORCE Guide: Ultimate Edition", pageWidth / 2, y, { align: 'center' });
             y += 10;
+            
+            doc.setFontSize(10);
+            doc.setTextColor(40, 120, 255);
+            doc.textWithLink("Interactive Web App: https://365otg.github.io/akaiforceapp/", pageWidth / 2, y, { 
+                url: 'https://365otg.github.io/akaiforceapp/',
+                align: 'center' 
+            });
+            doc.setTextColor(0);
+            y += 10;
+
             doc.setFontSize(12);
             doc.text("Comprehensive Tips & Tricks Guide", pageWidth / 2, y, { align: 'center' });
             y += 15;
+            
             let currentCategoryKey = '';
             const sortedTips = [...tipsData].sort((a, b) => a.category.localeCompare(b.category));
+            
             sortedTips.forEach((tip) => {
                 if (tip.category !== currentCategoryKey) {
                     currentCategoryKey = tip.category;
-                    addPageIfNeeded(20);
+                    addPageIfNeeded(25); // Check for space for the header
+                    y += 10; 
                     doc.setFontSize(16);
                     doc.setFont(undefined, 'bold');
                     const categoryTitle = categories[currentCategoryKey].name;
                     doc.text(categoryTitle, margin, y);
                     y += 10;
                 }
-                const titleText = `${tip.title} (${tip.difficulty})`;
-                const descriptionText = tip.description;
-                const sourceText = `Source: ${tip.source}`;
+
                 doc.setFontSize(12);
                 doc.setFont(undefined, 'bold');
-                const titleLines = doc.splitTextToSize(titleText, pageWidth - (2 * margin));
+                const titleLines = doc.splitTextToSize(`${tip.title} (${tip.difficulty})`, pageWidth - (margin * 2));
+                
                 doc.setFontSize(10);
                 doc.setFont(undefined, 'normal');
-                const descriptionLines = doc.splitTextToSize(descriptionText, pageWidth - (2 * margin));
-                addPageIfNeeded(titleLines.length * 5 + descriptionLines.length * 5 + 10);
+                const descriptionLines = doc.splitTextToSize(tip.description, pageWidth - (margin * 2));
+                
+                const neededHeight = (titleLines.length * 6) + (descriptionLines.length * 5) + 12;
+                addPageIfNeeded(neededHeight);
+
                 doc.setFontSize(12);
                 doc.setFont(undefined, 'bold');
                 doc.text(titleLines, margin, y);
-                y += titleLines.length * 5;
+                y += titleLines.length * 6;
+
                 doc.setFontSize(10);
                 doc.setFont(undefined, 'normal');
                 doc.text(descriptionLines, margin, y);
                 y += descriptionLines.length * 5;
+
                 doc.setFontSize(8);
                 doc.setTextColor(150);
-                doc.text(sourceText, margin, y);
+                doc.text(`Source: ${tip.source}`, margin, y);
                 doc.setTextColor(0);
                 y += 10;
             });
